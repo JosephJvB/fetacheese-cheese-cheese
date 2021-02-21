@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        main {
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+        div {
+            border: black solid 1px;
+        }
+        .hand {
+            display: flex;
+            flex-direction: row;
+            width:  100%;
+            height: 200px;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .deck {
+            margin: 20px auto;
+            pointer-events: none;
+        }
+        .card-stack {
+            width: 130px;
+            height: 200px;
+            text-align: center;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <h1>A Pig that likes to play for trinkets</h1>
+    <main>
+        <div class="deck card-stack"></div>
+        <div class="hand"></div>
+    </main>
+    <footer>
+    </footer>
+    <script src="card.js"></script>
+    <script src="player.js"></script>
+    <script src="game.js"></script>
+    <script type="text/javascript">
+        const NUM_PLAYERS = 2
+        const game = new Game()
+    </script>
+</body>
+</html>

@@ -17,16 +17,12 @@ class Player {
     }
     addToHand(card) {
         if(!this.hand[card.value]) this.hand[card.value] = []
-        this.hand[card.value].push(card)
-        if(this.hand[card.value].length == 4) {
+        if(this.hand[card.value].length + 1 == 4) {
             console.log('➕ made a set!', card.value)
             this.sets++
             delete this.hand[card.value]
-        }
-    }
-    startTurn() {
-        if(Object.keys(this.hand).length == 0) {
-            this.onFail()
+        } else {
+            this.hand[card.value].push(card)
         }
     }
     fishCards(value) {
@@ -48,10 +44,12 @@ class Human extends Player {
             this.onFish()
         })
     }
-    handleEndTurn(cardValue) {
-        if(!this.onSuccess || !this.onFail) {
-            return
+    startTurn() {
+        if(Object.keys(this.hand).length == 0) {
+            this.onFail()
         }
+    }
+    handleEndTurn(cardValue) {
         console.log('human guessed', cardValue)
         const target = this.targets[0] // for now just ask computer
         const foundCards = target.fishCards(cardValue)
@@ -59,15 +57,16 @@ class Human extends Player {
             for(const c of foundCards) this.addToHand(c)
             this.onSuccess()
         } else {
+            console.log('please click the deck to go fish!')
             this.onFail()
         }
     }
     addToHand(card) {
         super.addToHand(card)
-        // console.log('human add to hand', card.value)
         if(!this.stacks[card.value]) {
             this.stacks[card.value] = new CardStack(card.value)
             this.stacks[card.value].el.addEventListener('click', () => {
+                if(!this.onSuccess || !this.onFail) return
                 this.handleEndTurn(card.value)
             })
             this.handEl.appendChild(this.stacks[card.value].el)
